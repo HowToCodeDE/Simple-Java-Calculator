@@ -1,45 +1,86 @@
-package locic;  //Das Package ist optional, wird aber für ältere Compiler empfohlen.
+package locic;
 
-import java.util.Scanner; //importieren des Scanners
+import java.util.Scanner;
 
-public class Main { //Main Klasse
+public class Main {
 
-    public static void main(String[] args) { //Main Methode
-        try { //Try catch, ins try springt Java immer rein, probiert es und wenn ein Fehler kommt, springt es ins Catch
-            while (true) //Schleife, dass das Programm IMMER wiederholt wird, solange es nicht ins Break geht
+    public static void main(String[] args) {
+        try {
+            while (true)
             {
-                //Variablen
-                    String num1 = ""; //Nummer 1 als String da bei int nur Zahlen akzeptiert werden
-                    String num2 = ""; //Nummer 2 als String da bei int nur Zahlen akzeptiert werden
-                    int intNum1 = 0; //Int Variable
-                    int intNum2 = 0; //Int Variable
-                    String choise = ""; //String Variable zum wählen
-                    Scanner scanner = new Scanner(System.in); //Neues scanner Objekt erstellen (Scanner packt alles in die Konsole eingegebene in eine Variable
-
-                System.out.println("Enter first number");
-                num1 = scanner.nextLine(); //Nummer 1 = Eingabe in die Konsole als Striing
-                System.out.println("Enter second number");
-                num2 = scanner.nextLine(); //Eingabe in die Konsole als String
-                intNum1 = Integer.parseInt(num1); //String zu int machen damit man rechnen kann
-                intNum2 = Integer.parseInt(num2); //String zu int
-                System.out.println("Options are +, -, * and /");
-                choise = scanner.nextLine(); //Auswahl = Konsolen Eingabe
-                switch (choise) { //switch = wie hunderte if
-                    case "+" -> System.out.println(MathFunctions.plusCalc(intNum1, intNum2)); //+
-                    case "-" -> System.out.println(MathFunctions.minusCalc(intNum1, intNum2)); //-
-                    case "*" -> System.out.println(MathFunctions.multiplyCalc(intNum1, intNum2)); //*
-                    case "/" -> System.out.println(MathFunctions.divideCalc(intNum1, intNum2)); // /
+                //var
+                    String num1 = "";
+                    String num2 = "";
+                    double doubleNum1 = 0;
+                    double doubleNum2 = 0;
+                    String choise = "";
+                    Scanner scanner = new Scanner(System.in);
+                //var
+                while (true){
+                    try {
+                        System.out.println("Enter first number");
+                        num1 = scanner.nextLine();
+                        doubleNum1 = Double.parseDouble(num1);
+                        break;
+                    }
+                    catch (Exception e)
+                    {
+                        System.out.println("Error by number, try again");
+                    }
                 }
-                System.out.println("Type 'close' to close or press enter");
-                choise = scanner.nextLine(); //Auswahl
+                while (true)
+                {
+                    try {
+                        System.out.println("Enter second number");
+                        num2 = scanner.nextLine();
+                        doubleNum2 = Double.parseDouble(num2);
+                        break;
+                    }
+                    catch (Exception e)
+                    {
+                        System.out.println("Error by number, try again");
+                    }
+                }
+
+                while (true)
+                {
+                    try {
+                        System.out.println("Options are +, -, * and /");
+                        choise = scanner.nextLine();
+                        if(choise.equals("+") || choise.equals("-") || choise.equals("*") || choise.equals("/")) {
+                            break;
+                        }
+                        else {
+                            System.out.println("Type +, -, * or /");
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        System.out.println("Unknown error, try again");
+                    }
+                }
+
+                if(doubleNum1 == 0 && doubleNum2 == 0 && choise.equals("/")) {
+                    System.out.println("You cant calculate 0/0");
+
+                }
+                switch (choise) {
+                    case "+" -> System.out.println(MathFunctions.plusCalc(doubleNum1, doubleNum2));
+                    case "-" -> System.out.println(MathFunctions.minusCalc(doubleNum1, doubleNum2));
+                    case "*" -> System.out.println(MathFunctions.multiplyCalc(doubleNum1, doubleNum2));
+                    case "/" -> System.out.println(MathFunctions.divideCalc(doubleNum1, doubleNum2));
+                }
+                System.out.println("Type 'close' to close or press enter to continue the programm");
+                choise = scanner.nextLine();
                 if (choise.equals("close")) {
-                    break; //Schleifenabbruch
+                    break;
                 }
             }
         }
         catch (Exception e)
         {
-            e.printStackTrace(); //Printet Fehler in die Konsole
+            e.printStackTrace();
+            System.out.println("Unknown error, try again");
         }
     }
 }
